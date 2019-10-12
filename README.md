@@ -34,7 +34,7 @@ We provide a skeleton of `run.sh` and of the folder `code`, that contains `build
 
 So simply add the code in `code/source` and update `run.sh` with the executables you want to be run. There can be several, if you prefer to. Note that `run.sh` should be run from the root folder of the repository. 
 
-The output of your code would go to `output` (text files, plots, etc), so no need to also store these in Git. You can update the `.gitignore` file to set to ignore the sort of files that you would add to this folder.
+The output of your code would go to `output` (text files, plots, etc). Just in case your code would not compile directly for us (some of us use `MacOS`, some `Linux`, some `Windows`), store these file in `output` also in `Git`.
 
 # The C++ and data analysis task
 
@@ -50,7 +50,7 @@ But to compare rigourously the three compression optons, an answer has to be qua
 
 Although the uncompressed and compressed point clouds in the two `.ply` files contain the same number of points (one point being one line in the file), the points do not appear in the same order. First you need to re-arrange the points in the decompressed point cloud to be in the same order as those in the compressed point clouds. The choice is made by having the smallest cartesian distance. That is, for each point in the uncompressed point cloud, study the points in the decompressed point cloud and find the one that is closest to it. 
 
-Add your code in `code/source`, update `run.sh` so that when running this script, a text file is created in the `output` folder. The file is to contain the list of points with the values: `x_uncompressed`, `y_uncompressed`, `z_uncompressed`, `z_decompressed`, `y_decompressed`, `z_decompressed`, `distance`.
+Add your code in `code/source`, update `run.sh` so that when running this script, a text file is created in the  `output` folder. The file is to contain the list of points with the values: `x_uncompressed`, `y_uncompressed`, `z_uncompressed`, `z_decompressed`, `y_decompressed`, `z_decompressed`, `distance`.
 
 Study these values of distance and introduce one or several figures of merit that characterize the geometry accuracy of the compression (Hint: Geometry accuracy can be maximum/average distance between the point sets of uncompressed and ordered decompressed point cloud). 
 
@@ -58,7 +58,8 @@ Do you obtain the same order as you obtained qualitatively by eye with `CloudCom
 
 For this part, you can use Python, if you prefer, for example to parse the previous output file for distances, manipulate them, create some plots. 
 
+Note that while there are open source libraries that achieve this task, and which we may use in a real day to day job, the task is for your to code this yourself, to test your coding and problem solving skills.
 
-
+Please add a report either in another `README` file, or in a `pdf` file in the output file. Make sure you explain why you designed the code as you did, why did you choose these algorithms, what choices you made to make sure the code runs efficiently, fast, with as few and possible CPU and RAM resources. In addition to the coding test, please also make sure you explain the `data analysis` questions how do the three compressions ranks, of how you chose the figure of merit to do the ranking. And if you had more time or computing resources, how would you improve the results.
 
 Thank you for taking a look at the task of studying compression on a point cloud representing a car. Please add your code in `code/source`, update `run.sh` with the executables you want us to run, which will put your results (text files, plots, etc) into `output`. Sending us via email the Git repository with your solution! Good luck!
