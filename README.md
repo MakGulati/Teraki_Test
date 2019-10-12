@@ -62,4 +62,8 @@ Note that while there are open source libraries that achieve this task, and whic
 
 Please add a report either in another `README` file, or in a `pdf` file in the output file. Make sure you explain why you designed the code as you did, why did you choose these algorithms, what choices you made to make sure the code runs efficiently, fast, with as few and possible CPU and RAM resources. In addition to the coding test, please also make sure you explain the `data analysis` questions how do the three compressions ranks, of how you chose the figure of merit to do the ranking. And if you had more time or computing resources, how would you improve the results.
 
-Thank you for taking a look at the task of studying compression on a point cloud representing a car. Please add your code in `code/source`, update `run.sh` with the executables you want us to run, which will put your results (text files, plots, etc) into `output`. Sending us via email the Git repository with your solution! Good luck!
+Thank you for taking a look at the task of studying compression on a point cloud representing a car. Please add your code in `code/source`, update `run.sh` with the executables you want us to run, which will put your results (text files, plots, etc) into `output`. Copy your `output` to `output_final` or similar, so that we have a list of your own output. And keep `output` folder empty. 
+
+# Conclusion
+
+We expect to test your solution by simply running `./run.sh`. This should compile your code, run it, and put the output in the output folders. For your report we will look in `output_folder`. Then send us via email the Git repository with your solution! Good luck!
