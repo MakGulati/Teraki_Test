@@ -18,7 +18,7 @@ We will also take into consideration if the code respects general good practice,
 
 # How to format and send us your code and results
 
-We already provide a structure of a `Git` repository. Please develop in this structure, and then post it a private version of GitHub (we understand a private account is free in GitHub starting from recently). Make it it available to read to `abuzatu`, `mholzel`, `paulsabyasachi`. Please reply to our email by giving us the name of your repository.  We want to do simply clone your repository, cd into into and run `./run.sh` from the root directory of the repository. For example.
+We already provide a structure of a `Git` repository. Please develop in this structure, and then post it a _private repository_ on GitHub. Make it it available to read to `abuzatu`, `mholzel`, `paulsabyasachi`. Please reply to our email by giving us the name of your repository.  We want to do simply clone your repository, cd into into and run `./run.sh` from the root directory of the repository. For example.
 
 ```
 git clone https://github.com/abuzatu/Teraki3DRecruitmentTestApr19.git
