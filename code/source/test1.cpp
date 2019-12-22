@@ -69,7 +69,7 @@ vector<Point3D> Data_Parsed(int fileNo=0)
     ifstream inFile;
     
     // open the file stream
-    string input_file_dir="/Users/mayank/Code/Repos/Teraki3DRecruitmentTestApr19/input/";
+    string input_file_dir="/Users/mayank/Code/Repos/Teraki_Test/input/" ;
     inFile.open(input_file_dir + fileName);
     // check if opening a file failed
     if (inFile.fail()) {
