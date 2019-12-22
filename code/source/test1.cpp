@@ -12,8 +12,7 @@ struct Point3D
 
 vector<Point3D> pixels,pixelsA,pixelsB,pixelsC;
 void removeDupWord(string _str, int _fileNo) 
-{   
-    
+{   //this function splits lines in words using ' ' delimiter
 
     vector<long double> input;
     string word = ""; 
@@ -23,6 +22,7 @@ void removeDupWord(string _str, int _fileNo)
        {   
         //    cout << word << endl; 
            input.push_back(stold (word));
+           //converts string in long double and pushes it to input vector
            
            word = ""; 
        } 
@@ -33,10 +33,11 @@ void removeDupWord(string _str, int _fileNo)
    } 
 
     long double arr[input.size()];
-    copy(input.begin(), input.end(), arr);
+    copy(input.begin(), input.end(), arr); //copies contents of vector to array
     if (_fileNo==0)
     {
      pixels.push_back({arr[0],arr[1],arr[2]});
+     //for pushing to vectors of structure element by element
     }
     if (_fileNo==1)
     {
@@ -54,6 +55,7 @@ void removeDupWord(string _str, int _fileNo)
  
 } 
 vector<Point3D> Data_Parsed(int fileNo)
+//this function based on fileno. outputs parsed vector of struct
 {   string fileName;
     if (fileNo==0)
     {fileName="Car_XYZI_uncompressed_ASCII.ply";
@@ -70,7 +72,7 @@ vector<Point3D> Data_Parsed(int fileNo)
     ifstream inFile;
     pixels.clear(),pixelsA.clear(),pixelsB.clear(),pixelsC.clear();
     // open the file stream
-    string input_file_dir="/Users/mayank/Code/Repos/Teraki_Test/input/" ;
+    string input_file_dir="/Users/mayank/Code/Repos/Teraki_Test/input/" ; //TODO:please update file directory based on your computer
     inFile.open(input_file_dir + fileName);
     // check if opening a file failed
     if (inFile.fail()) {
@@ -85,39 +87,41 @@ vector<Point3D> Data_Parsed(int fileNo)
     while (getline(inFile, line))
 
     {   i++;
-        if (31< i && i< 2141)
+        if (31< i && i< 2141) //coordinates lie in this range of line numbers
         {
-            // cout << i<<"||"<<line << endl;
             removeDupWord(line,fileNo);
         }
     }
     // close the file stream
-    // cout<<pixels.size()<<pixels[0].x<<" "<<pixels[pixels.size()-1].z<<endl;
     inFile.close();
 
-//    vector<Point3D> A;
+    vector<Point3D> A;
     if (fileNo==0)
-    {return(pixels);
+    {A=pixels;
     }
     if (fileNo==1)
-    {return(pixelsA);
+    {A=pixelsA;
     }
     if (fileNo==2)
-    {return(pixelsB);
+    {A=pixelsB;
     }
     if (fileNo==3)
-    {return(pixelsC);
+    {A=pixelsC;
     }
+
+    return (A);
 }
 
 //double score_calculator(vector<Point3D> which_pix1, vector<Point3D> which_pix2) {
 vector<Point3D>  sorted(vector<Point3D> which_pix1, vector<Point3D> which_pix2) {
+    //this function sorts second argument vector w.r.t. first argument vector
     vector<Point3D> _new_pix2;
     _new_pix2.clear();
     int tmp_min;
     vector<int> first;
+    first.clear();
     for (int i = 0; i < which_pix1.size(); i++) {
-        long double min_dist = 10;                //arbitary to calculate minimum
+        long double min_dist = 10;                //arbitrary to calculate minimum dist
         for (int j = 0; j < which_pix2.size(); j++) {
 
             double xs = (which_pix1[i].x - which_pix2[j].x) * (which_pix1[i].x - which_pix2[j].x);
@@ -126,16 +130,17 @@ vector<Point3D>  sorted(vector<Point3D> which_pix1, vector<Point3D> which_pix2) 
             if (sqrt(xs + ys + zs) < min_dist)
             {
                 min_dist = sqrt(xs + ys + zs);
-                tmp_min=j;
+                tmp_min=j;      //calculate the index which is closest
             }
         }
 
-        first.push_back(tmp_min);
+        first.push_back(tmp_min); //this vectors have correct order of second vector based on first vector
     }
+//    for (int m=0;m<5;m++){ //for testing order of sorted
+//        cout<<"first "<<first[m]<<endl;}
 
     for (int i = 0; i < which_pix1.size(); i++) {
-        _new_pix2.push_back(which_pix2[first[i]]);
-
+        _new_pix2.push_back(which_pix2[first[i]]);  //making new ordered vector
         }
     return(_new_pix2);
 
@@ -143,6 +148,7 @@ vector<Point3D>  sorted(vector<Point3D> which_pix1, vector<Point3D> which_pix2) 
 
 
 vector<double> calculate_scores() {
+    //this function calculates cumulative euclidean distance scores
     vector<Point3D> pix, pixA, pixB, pixC, new_pixA, new_pixB, new_pixC, new_pix;
     pix = Data_Parsed(0);
     pixA = Data_Parsed(1);
@@ -171,18 +177,33 @@ vector<double> calculate_scores() {
             double xs = (pix[j].x - new_pix[j].x) * (pix[j].x - new_pix[j].x);
             double ys = (pix[j].y - new_pix[j].y) * (pix[j].y - new_pix[j].y);
             double zs = (pix[j].z - new_pix[j].z) * (pix[j].z - new_pix[j].z);
-            sum_score[k]+=sqrt(xs + ys + zs);
+            sum_score[k]+=sqrt(xs + ys + zs); //cumulative
 
         }
-        scorer.push_back(sum_score[k]);
+        scorer.push_back(sum_score[k]); //pushes vector of 3 scores
     }
     return (scorer);
 }
 int main()
 
 {
-    for (int i=0;i<3;i++)
-{    cout<<calculate_scores()[i]<<endl;}      //lower the score the better the match
+
+ cout<<"lower the score the better the match for A B C"<<endl;
+ cout<<"SCORE for A: "<<calculate_scores()[0]<<",  SCORE for B:  "<<calculate_scores()[1]<<",  SCORE for C:  "<<calculate_scores()[2]<<endl;
+   //lower the score the better the match
+
+    ofstream myfile ("/Users/mayank/Code/Repos/Teraki_Test/output/result.txt");
+
+    if (myfile.is_open())
+    {
+
+        myfile<<"lower the score the better the match for A B C"<<endl;
+        myfile << "SCORE for A: "<<calculate_scores()[0]<<",  SCORE for B:  "<<calculate_scores()[1]<<",  SCORE for C:  "<<calculate_scores()[2]<<endl;
+        myfile<<"Regards Mayank "<<endl;
+        myfile.close();
+    }
+
+    return 0;
 
 
 

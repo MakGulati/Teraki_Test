@@ -1,0 +1,3 @@
+lower the score the better the match for A B C
+SCORE for A: 21.0695,  SCORE for B:  2.99616,  SCORE for C:  116.336
+Regards Mayank 
