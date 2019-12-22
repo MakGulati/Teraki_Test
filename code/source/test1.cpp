@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector> 
-
+#include<math.h>
 using namespace std;
 
 struct Point3D
@@ -109,17 +109,43 @@ vector<Point3D> Data_Parsed(int fileNo)
     }
 }
 
+double score_calculator(vector<Point3D> which_pix1, vector<Point3D> which_pix2) {
+    double sum_score = 0;
+    for (int i = 0; i < which_pix1.size(); i++) {
+        long double min_dist = 100;                //arbitary to calculate minimum
+        for (int j = 0; j < which_pix2.size(); j++) {
+
+            double xs = (which_pix1[i].x - which_pix2[j].x) * (which_pix1[i].x - which_pix2[j].x);
+            double ys = (which_pix1[i].y - which_pix2[j].y) * (which_pix1[i].y - which_pix2[j].y);
+            double zs = (which_pix1[i].z - which_pix2[j].z) * (which_pix1[i].z - which_pix2[j].z);
+            if (sqrt(xs + ys + zs) < min_dist) {
+                min_dist = sqrt(xs + ys + zs);
+            }
+        }
+        sum_score += min_dist;
+    }
+    return (sum_score);
+}
 
 
 int main()
 
 {  
     // cout<<Data_Parsed(2).size()<<"  "<<Data_Parsed(2)[0].x<<"    "<<Data_Parsed(2)[Data_Parsed(2).size()-1].z<<endl;
-    cout<<Data_Parsed(2)[2108].x<<"  "<<Data_Parsed(2)[2108].y<<"    "<<Data_Parsed(2)[2108].z<<"  "<<Data_Parsed(2).size()<<endl;
+    // cout<<Data_Parsed(2)[2108].x<<"  "<<Data_Parsed(2)[2108].y<<"    "<<Data_Parsed(2)[2108].z<<"  "<<Data_Parsed(2).size()<<endl;
     // for (int i=0;i<100;i++)
     // {
     //         cout<<Data_Parsed(1)[i].x<<"  "<<Data_Parsed(1)[i].y<<"  "<<Data_Parsed(1)[i].z<<"  "<<Data_Parsed(1).size()<<endl;
 
     // }
+    vector<Point3D> pix,pixA,pixB,pixC;
+    pix=Data_Parsed(0);
+    pixA=Data_Parsed(1);
+    pixB=Data_Parsed(2);
+    pixC=Data_Parsed(3);
+
+cout<<"sum_scoreA: "<<score_calculator(pix,pixA)<<"  sum_scoreB: "<<score_calculator(pix,pixB)<<"  sum_scoreC: "<<score_calculator(pix,pixC)<<endl;
+
+return(0);
 }
 
