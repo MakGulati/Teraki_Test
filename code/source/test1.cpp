@@ -182,7 +182,7 @@ int main()
 
 {
     for (int i=0;i<3;i++)
-{    cout<<calculate_scores()[i]<<endl;}
+{    cout<<calculate_scores()[i]<<endl;}      //lower the score the better the match
 
 
 

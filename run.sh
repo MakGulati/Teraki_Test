@@ -31,7 +31,8 @@ DO_RUN="1"
 
 # cmake + make
 if [[ ${DO_CMAKE_AND_MAKE} == "1" ]]; then
-    COMMAND="cd code && cd build && rm -rf * && cmake ../source && make && cd .. && cd .."
+#    COMMAND="cd code && cd build && rm -rf * && cmake ../source && make && cd .. && cd .."
+    COMMAND="cd code && cd build && rm -rf * && cmake .. && make && cd .. && cd .."
     echo "COMMAND=${COMMAND}"
     eval ${COMMAND}    
 fi
@@ -60,7 +61,7 @@ fi
 
 # if here, you also want to run
 
-COMMAND="./code/build/test.exe" # for example, assuming you create an executable test.exe
+COMMAND="./code/build/simple_run" # for example, assuming you create an executable test.exe
 echo "COMMAND=${COMMAND}"
 eval ${COMMAND}
 
