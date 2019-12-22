@@ -21,7 +21,7 @@ void removeDupWord(string _str, int _fileNo)
        if (x == ' ') 
        {   
         //    cout << word << endl; 
-           input.push_back(stod (word));
+           input.push_back(stold (word));
            
            word = ""; 
        } 
@@ -52,7 +52,7 @@ void removeDupWord(string _str, int _fileNo)
     input.clear();
  
 } 
-vector<Point3D> Data_Parsed(int fileNo=0)
+vector<Point3D> Data_Parsed(int fileNo)
 {   string fileName;
     if (fileNo==0)
     {fileName="Car_XYZI_uncompressed_ASCII.ply";
@@ -67,7 +67,7 @@ vector<Point3D> Data_Parsed(int fileNo=0)
     {fileName="Car_XYZI_decompressed_ASCII_C.ply";
     }
     ifstream inFile;
-    
+    pixels.clear(),pixelsA.clear(),pixelsB.clear(),pixelsC.clear();
     // open the file stream
     string input_file_dir="/Users/mayank/Code/Repos/Teraki_Test/input/" ;
     inFile.open(input_file_dir + fileName);
@@ -84,7 +84,7 @@ vector<Point3D> Data_Parsed(int fileNo=0)
     while (getline(inFile, line))
 
     {   i++;
-        if (31< i && i< 2141 )
+        if (31< i && i< 2141)
         {
             // cout << i<<"||"<<line << endl;
             removeDupWord(line,fileNo);
@@ -113,9 +113,13 @@ vector<Point3D> Data_Parsed(int fileNo=0)
 
 int main()
 
-{
+{  
     // cout<<Data_Parsed(2).size()<<"  "<<Data_Parsed(2)[0].x<<"    "<<Data_Parsed(2)[Data_Parsed(2).size()-1].z<<endl;
-    cout<<Data_Parsed(1)[Data_Parsed(1).size()-1].x<<"  "<<Data_Parsed(1)[Data_Parsed(1).size()-1].y<<"    "<<Data_Parsed(1)[Data_Parsed(1).size()-1].z<<endl;
-    
+    cout<<Data_Parsed(2)[2108].x<<"  "<<Data_Parsed(2)[2108].y<<"    "<<Data_Parsed(2)[2108].z<<"  "<<Data_Parsed(2).size()<<endl;
+    // for (int i=0;i<100;i++)
+    // {
+    //         cout<<Data_Parsed(1)[i].x<<"  "<<Data_Parsed(1)[i].y<<"  "<<Data_Parsed(1)[i].z<<"  "<<Data_Parsed(1).size()<<endl;
+
+    // }
 }
 
