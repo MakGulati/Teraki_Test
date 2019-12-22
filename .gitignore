@@ -5,3 +5,4 @@
 .ipynb_checkpoints
 code/build/*
 .vscode/
+code/cmake-build-debug/*

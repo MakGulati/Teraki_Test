@@ -9,6 +9,7 @@ struct Point3D
     long double x,y,z;
 
     };
+
 vector<Point3D> pixels,pixelsA,pixelsB,pixelsC;
 void removeDupWord(string _str, int _fileNo) 
 {   
@@ -94,7 +95,7 @@ vector<Point3D> Data_Parsed(int fileNo)
     // cout<<pixels.size()<<pixels[0].x<<" "<<pixels[pixels.size()-1].z<<endl;
     inFile.close();
 
-
+//    vector<Point3D> A;
     if (fileNo==0)
     {return(pixels);
     }
@@ -109,42 +110,81 @@ vector<Point3D> Data_Parsed(int fileNo)
     }
 }
 
-double score_calculator(vector<Point3D> which_pix1, vector<Point3D> which_pix2) {
-    double sum_score = 0;
+//double score_calculator(vector<Point3D> which_pix1, vector<Point3D> which_pix2) {
+vector<Point3D>  sorted(vector<Point3D> which_pix1, vector<Point3D> which_pix2) {
+    vector<Point3D> _new_pix2;
+    _new_pix2.clear();
+    int tmp_min;
+    vector<int> first;
     for (int i = 0; i < which_pix1.size(); i++) {
-        long double min_dist = 100;                //arbitary to calculate minimum
+        long double min_dist = 10;                //arbitary to calculate minimum
         for (int j = 0; j < which_pix2.size(); j++) {
 
             double xs = (which_pix1[i].x - which_pix2[j].x) * (which_pix1[i].x - which_pix2[j].x);
             double ys = (which_pix1[i].y - which_pix2[j].y) * (which_pix1[i].y - which_pix2[j].y);
             double zs = (which_pix1[i].z - which_pix2[j].z) * (which_pix1[i].z - which_pix2[j].z);
-            if (sqrt(xs + ys + zs) < min_dist) {
+            if (sqrt(xs + ys + zs) < min_dist)
+            {
                 min_dist = sqrt(xs + ys + zs);
+                tmp_min=j;
             }
         }
-        sum_score += min_dist;
+
+        first.push_back(tmp_min);
     }
-    return (sum_score);
+
+    for (int i = 0; i < which_pix1.size(); i++) {
+        _new_pix2.push_back(which_pix2[first[i]]);
+
+        }
+    return(_new_pix2);
+
 }
 
 
+vector<double> calculate_scores() {
+    vector<Point3D> pix, pixA, pixB, pixC, new_pixA, new_pixB, new_pixC, new_pix;
+    pix = Data_Parsed(0);
+    pixA = Data_Parsed(1);
+    pixB = Data_Parsed(2);
+    pixC = Data_Parsed(3);
+    vector<double> scorer;
+    scorer.clear();
+    new_pixA = sorted(pix, pixA);
+    new_pixB = sorted(pix, pixB);
+    new_pixC = sorted(pix, pixC);
+    double sum_score[3]={0,0,0};
+    for (int k = 0; k < 3; k++) {
+
+        if (k == 0) {
+            new_pix = new_pixA;
+        }
+
+        if (k == 1) {
+            new_pix = new_pixB;
+        }
+        if (k == 2) {
+            new_pix = new_pixC;
+        }
+        for (int j = 0; j < pix.size(); j++) {
+
+            double xs = (pix[j].x - new_pix[j].x) * (pix[j].x - new_pix[j].x);
+            double ys = (pix[j].y - new_pix[j].y) * (pix[j].y - new_pix[j].y);
+            double zs = (pix[j].z - new_pix[j].z) * (pix[j].z - new_pix[j].z);
+            sum_score[k]+=sqrt(xs + ys + zs);
+
+        }
+        scorer.push_back(sum_score[k]);
+    }
+    return (scorer);
+}
 int main()
 
-{  
-    // cout<<Data_Parsed(2).size()<<"  "<<Data_Parsed(2)[0].x<<"    "<<Data_Parsed(2)[Data_Parsed(2).size()-1].z<<endl;
-    // cout<<Data_Parsed(2)[2108].x<<"  "<<Data_Parsed(2)[2108].y<<"    "<<Data_Parsed(2)[2108].z<<"  "<<Data_Parsed(2).size()<<endl;
-    // for (int i=0;i<100;i++)
-    // {
-    //         cout<<Data_Parsed(1)[i].x<<"  "<<Data_Parsed(1)[i].y<<"  "<<Data_Parsed(1)[i].z<<"  "<<Data_Parsed(1).size()<<endl;
+{
+    for (int i=0;i<3;i++)
+{    cout<<calculate_scores()[i]<<endl;}
 
-    // }
-    vector<Point3D> pix,pixA,pixB,pixC;
-    pix=Data_Parsed(0);
-    pixA=Data_Parsed(1);
-    pixB=Data_Parsed(2);
-    pixC=Data_Parsed(3);
 
-cout<<"sum_scoreA: "<<score_calculator(pix,pixA)<<"  sum_scoreB: "<<score_calculator(pix,pixB)<<"  sum_scoreC: "<<score_calculator(pix,pixC)<<endl;
 
 return(0);
 }
